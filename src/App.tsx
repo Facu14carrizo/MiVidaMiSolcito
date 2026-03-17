@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import GalleryTeaser from './components/GalleryTeaser';
+import PhotoGallery from './components/PhotoGallery';
 // import PhotoAlbum from './components/PhotoAlbum';
 // import GooglePhotosAlbum from './components/GooglePhotosAlbum';
 import Gatitos3D from './components/Gatitos3D';
@@ -26,8 +28,8 @@ function App() {
 
       <main>
         <Hero />
-        {/* <PhotoAlbum /> */}
-        {/* <GooglePhotosAlbum /> */}
+        <GalleryTeaser />
+        <PhotoGallery />
         <Gatitos3D />
         <MessageFinal />
       </main>

@@ -69,13 +69,6 @@ function LoveCounter() {
           ))}
         </div>
       </div>
-      <motion.p 
-        initial={{ opacity: 0, y: -5 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="font-outfit text-pink-400 text-sm md:text-lg font-black uppercase tracking-[0.2em]"
-      >
-        Desde que estamos juntos
-      </motion.p>
     </div>
   );
 }
@@ -84,12 +77,6 @@ export default function Navbar() {
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
-
-  const navLinks = [
-    { id: 'hero', label: 'Inicio' },
-    { id: 'gatitos', label: 'Gatitos' },
-    { id: 'message', label: 'Mensaje' },
-  ];
 
   return (
     <motion.nav
@@ -100,7 +87,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-2 md:px-6 py-2 md:py-4 flex items-center justify-between gap-4">
         {/* Logo - Hidden on Mobile */}
         <motion.div
-          animate={{ scale: [1, 1.1, 1] }}
+           animate={{ scale: [1, 1.1, 1] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           className="hidden md:flex items-center gap-3 cursor-pointer shrink-0"
           onClick={() => scrollToSection('hero')}
@@ -110,21 +97,19 @@ export default function Navbar() {
         </motion.div>
 
         {/* Live Counter - Centered and Grand on Mobile */}
-        <div className="flex-1 flex justify-center">
+        <div className="flex-1 flex flex-col items-center">
           <LoveCounter />
         </div>
 
-        {/* Desktop Menu - Hidden on Mobile */}
-        <div className="hidden lg:flex gap-8 shrink-0">
-          {navLinks.map((link) => (
-            <button
-              key={link.id}
-              onClick={() => scrollToSection(link.id)}
-              className="text-sm font-outfit font-black text-gray-600 hover:text-pink-500 transition-all hover:scale-110 uppercase tracking-widest"
-            >
-              {link.label}
-            </button>
-          ))}
+        {/* Text replaced Navigation Links */}
+        <div className="hidden lg:flex items-center shrink-0">
+          <motion.p 
+            initial={{ opacity: 0, y: -5 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="font-outfit text-pink-400 text-sm md:text-lg font-black uppercase tracking-[0.2em]"
+          >
+            Desde que estamos juntos
+          </motion.p>
         </div>
 
         {/* Mobile Menu Button - REMOVED per request */}
