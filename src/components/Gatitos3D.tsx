@@ -31,7 +31,14 @@ export default function Gatitos3D() {
           }}
         >
           <div className="aspect-[4/5] sm:aspect-video bg-gradient-to-br from-pink-100 to-purple-100 relative">
-            <Spline scene="https://prod.spline.design/nqIMVHcjz8fRWS8H/scene.splinecode" />
+            <img 
+              src="/preview.png" 
+              alt="Gatitos Preview" 
+              className="absolute inset-0 w-full h-full object-cover opacity-50 blur-[2px]"
+            />
+            <div className="absolute inset-0 z-10">
+              <Spline scene="https://prod.spline.design/nqIMVHcjz8fRWS8H/scene.splinecode" />
+            </div>
           </div>
         </motion.div>
 
