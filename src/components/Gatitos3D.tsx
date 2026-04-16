@@ -32,7 +32,7 @@ export default function Gatitos3D() {
         >
           <div className="aspect-[4/5] sm:aspect-video bg-gradient-to-br from-pink-100 to-purple-100 relative">
             <img 
-              src="/preview.png" 
+              src="/og-image.png" 
               alt="Gatitos Preview" 
               className="absolute inset-0 w-full h-full object-cover opacity-50 blur-[2px]"
             />
