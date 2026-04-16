@@ -14,11 +14,16 @@ const images = [
   "20251205_210509.jpg", "20260206_193100.jpg", "20260207_195424.jpg", "20260207_230944.jpg",
   "20260208_011053.jpg", "20260208_011220.jpg", "20260208_103927.jpg", "20260208_114438.jpg",
   "20260208_174526.jpg", "20260214_200702.jpg", "20260214_221130.jpg", "20260214_223316.jpg",
-  "20260215_005018.jpg", "20260301_191731.jpg", "20260301_193909.jpg", "IMG-20240820-WA0050.jpg",
-  "IMG-20241014-WA0127.jpg", "IMG-20241102-WA0011.jpg", "IMG_20240616_175812.jpg",
-  "IMG_20240616_175945.jpg", "IMG_20240913_220233.jpg", "IMG_20240915_172010.jpg",
-  "IMG_20240927_233601.jpg", "IMG_20241011_165552.jpg", "IMG_20241011_181653.jpg",
-  "IMG_20241011_192407.jpg", "IMG_20241014_225203.jpg", "IMG_20241123_013509.jpg"
+  "20260215_005018.jpg", "20260301_191731.jpg", "20260301_193909.jpg", "20260313_181605.jpg",
+  "20260313_204154.jpg", "20260315_223101.jpg", "20260316_000913.jpg", "20260316_001412.jpg",
+  "20260316_001809.jpg", "20260402_144521.jpg", "20260402_152159.jpg", "20260402_181805.jpg",
+  "20260402_184532.jpg", "20260402_190309.jpg", "20260402_224533.jpg", "20260403_161723.jpg",
+  "20260403_190247.jpg", "20260403_190416.jpg", "20260403_191350.jpg", "20260404_130006.jpg",
+  "20260404_163845.jpg", "IMG-20240820-WA0050.jpg", "IMG-20241014-WA0127.jpg",
+  "IMG-20241102-WA0011.jpg", "IMG_20240616_175812.jpg", "IMG_20240616_175945.jpg",
+  "IMG_20240913_220233.jpg", "IMG_20240915_172010.jpg", "IMG_20240927_233601.jpg",
+  "IMG_20241011_165552.jpg", "IMG_20241011_181653.jpg", "IMG_20241011_192407.jpg",
+  "IMG_20241014_225203.jpg", "IMG_20241123_013509.jpg"
 ];
 
 const captions = [
@@ -26,6 +31,27 @@ const captions = [
   "Mi lugar favorito eres tú", "Aventuras inolvidables", "Sos mi todo 🧸", "Cada segundo cuenta",
   "Nuestro mundo rosa 🌸", "Contigo todo es mejor", "Amor de mi vida", "Para siempre"
 ];
+
+const vacationCaptions = [
+  "Nuestras vacaciones mágicas 🏖️", "Amor bajo el sol ☀️", "Nuestro paraíso juntos 🌊",
+  "Días inolvidables en la playa 🏝️", "Sos mi sol en cada viaje 💖", "Momentos de paz y amor 🐚",
+  "Disfrutando del mar con vos 🌊", "Vibras de vacaciones ✨", "Atardeceres perfectos 🌅"
+];
+
+const getCaption = (imgName: string, index: number) => {
+  if (imgName.includes('202604') || imgName.includes('202603')) {
+    return vacationCaptions[index % vacationCaptions.length];
+  }
+  return captions[index % captions.length];
+};
+
+const sortedImages = [...images].sort((a, b) => {
+  const getTimestamp = (name: string) => {
+    const match = name.match(/(\d{8}(?:_\d{6})?)/);
+    return match ? match[1] : name;
+  };
+  return getTimestamp(a).localeCompare(getTimestamp(b));
+});
 
 export default function PhotoGallery() {
   const [selectedImg, setSelectedImg] = useState<string | null>(null);
@@ -55,7 +81,7 @@ export default function PhotoGallery() {
         </motion.div>
 
         <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-8 space-y-8">
-          {images.map((img, index) => (
+          {sortedImages.map((img, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, scale: 0.8 }}
@@ -82,7 +108,7 @@ export default function PhotoGallery() {
                   </div>
                 </div>
                 <p className="font-great-vibes text-2xl text-pink-400 text-center">
-                  {captions[index % captions.length]}
+                  {getCaption(img, index)}
                 </p>
                 <div className="mt-2 text-[10px] text-gray-300 font-mono text-center">
                   #{index + 1}
@@ -123,7 +149,7 @@ export default function PhotoGallery() {
               />
               <div className="absolute -bottom-12 left-0 right-0 text-center">
                 <p className="font-great-vibes text-4xl text-pink-300">
-                  {captions[images.indexOf(selectedImg) % captions.length]}
+                  {getCaption(selectedImg, sortedImages.indexOf(selectedImg))}
                 </p>
               </div>
             </motion.div>

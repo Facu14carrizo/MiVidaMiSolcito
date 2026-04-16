@@ -36,7 +36,7 @@ function App() {
 
       <footer className="bg-gradient-to-r from-pink-500 via-purple-500 to-pink-500 py-8 text-center text-white">
         <p className="font-dancing text-2xl mb-2">
-          Hecho con todo mi amor para vos 💝
+          Hecho con todo mi amor para vos 💝 - Facu
         </p>
         <p className="font-poppins text-sm opacity-90">
           2026 - Nuestro amor es eterno

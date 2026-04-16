@@ -8,7 +8,7 @@ function LoveCounter() {
   });
 
   useEffect(() => {
-    const startDate = new Date('2024-03-21T00:00:00');
+    const startDate = new Date('2024-04-21T00:00:00');
     
     const calculateTime = () => {
       const now = new Date();
