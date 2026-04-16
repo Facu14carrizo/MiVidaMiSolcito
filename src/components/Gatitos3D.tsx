@@ -25,19 +25,25 @@ export default function Gatitos3D() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
-          className="relative rounded-3xl overflow-hidden shadow-2xl"
+          className="relative rounded-3xl overflow-hidden shadow-2xl touch-none"
           style={{
-            boxShadow: '0 0 60px rgba(255, 105, 180, 0.4), 0 0 100px rgba(210, 153, 245, 0.3)'
+            boxShadow: '0 0 60px rgba(255, 105, 180, 0.4), 0 0 100px rgba(210, 153, 245, 0.3)',
+            touchAction: 'none'
+          }}
+          onWheel={(e) => {
+            if (e.ctrlKey) e.preventDefault();
           }}
         >
-          <div className="aspect-[4/5] sm:aspect-video bg-gradient-to-br from-pink-100 to-purple-100 relative">
+          <div className="aspect-[4/5] sm:aspect-video bg-gradient-to-br from-pink-100 to-purple-100 relative pointer-events-auto">
             <img 
               src="/og-image.png" 
               alt="Gatitos Preview" 
               className="absolute inset-0 w-full h-full object-cover opacity-50 blur-[2px]"
             />
             <div className="absolute inset-0 z-10">
-              <Spline scene="https://prod.spline.design/nqIMVHcjz8fRWS8H/scene.splinecode" />
+              <Spline 
+                scene="https://prod.spline.design/nqIMVHcjz8fRWS8H/scene.splinecode"
+              />
             </div>
           </div>
         </motion.div>

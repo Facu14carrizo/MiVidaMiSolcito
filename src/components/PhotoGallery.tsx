@@ -102,6 +102,8 @@ export default function PhotoGallery() {
                     alt="Nuestro momento"
                     className="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 transition-all duration-500"
                     loading="lazy"
+                    decoding="async"
+                    {...(index < 4 ? { fetchpriority: "high" } : {})}
                   />
                   <div className="absolute inset-0 bg-pink-200/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <Maximize2 className="text-white w-8 h-8 drop-shadow-md" />

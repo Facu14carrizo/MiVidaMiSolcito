@@ -143,55 +143,153 @@ export default function MessageFinal() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+            className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-4"
             onClick={() => setShowModal(false)}
           >
-            <motion.div
-              initial={{ scale: 0.5, rotate: -10 }}
-              animate={{ scale: 1, rotate: 0 }}
-              exit={{ scale: 0.5, rotate: 10 }}
-              className="bg-white rounded-3xl p-6 sm:p-8 md:p-12 max-w-2xl w-full shadow-2xl relative max-h-[90vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
+            {/* Contenedor del Sobre y Carta */}
+            <div className="relative w-full max-w-lg aspect-[4/3] flex items-center justify-center">
+              
+              {/* Sobre (Parte Trasera) */}
+              <div className="absolute inset-0 bg-pink-100 rounded-lg shadow-xl" 
+                style={{ zIndex: 10 }} 
+              />
+
+              {/* La Carta - Mensaje */}
               <motion.div
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 1, repeat: Infinity }}
-                className="text-center mb-6"
+                initial={{ y: 0, scale: 0.9, opacity: 0, zIndex: 11 }}
+                animate={{ 
+                  y: [-20, -200, -20], // Sube y luego se posiciona al frente
+                  scale: [0.9, 1, 1.1],
+                  opacity: 1,
+                  zIndex: [11, 11, 60] // Aumenta zIndex al final
+                }}
+                transition={{ 
+                  duration: 1.5,
+                  times: [0, 0.6, 1],
+                  ease: "easeInOut"
+                }}
+                className="absolute inset-x-2 sm:inset-x-0 bg-white rounded-xl p-6 md:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.2)] overflow-hidden"
+                style={{
+                  maxHeight: '90vh',
+                  scrollbarWidth: 'none',
+                  msOverflowStyle: 'none',
+                }}
+                onClick={(e) => e.stopPropagation()}
               >
-                <Heart className="text-pink-500 fill-pink-500 w-20 h-20 mx-auto" />
+                <style>{`
+                  .hide-scrollbar::-webkit-scrollbar { display: none; }
+                `}</style>
+                
+                <div className="hide-scrollbar overflow-y-auto h-full pr-1">
+                  <motion.div
+                    initial="hidden"
+                    animate="visible"
+                    variants={{
+                      visible: { transition: { staggerChildren: 0.2, delayChildren: 1.2 } }
+                    }}
+                  >
+                    <motion.div
+                      variants={{
+                        hidden: { opacity: 0, y: 20 },
+                        visible: { opacity: 1, y: 0 }
+                      }}
+                      className="text-center mb-4"
+                    >
+                      <motion.div
+                        animate={{ scale: [1, 1.1, 1] }}
+                        transition={{ duration: 1, repeat: Infinity }}
+                      >
+                        <Heart className="text-pink-500 fill-pink-500 w-12 h-12 mx-auto" />
+                      </motion.div>
+                    </motion.div>
+
+                    <motion.h3 
+                      variants={{
+                        hidden: { opacity: 0, y: 20 },
+                        visible: { opacity: 1, y: 0 }
+                      }}
+                      className="font-dancing text-3xl md:text-5xl text-pink-600 mb-4 text-center"
+                    >
+                      {nombre}, eres mi todo 💕
+                    </motion.h3>
+
+                    <motion.div 
+                      variants={{
+                        hidden: { opacity: 0 },
+                        visible: { opacity: 1 }
+                      }}
+                      className="space-y-4 font-poppins text-gray-700 text-sm md:text-lg leading-relaxed text-center"
+                    >
+                      <motion.p variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}>
+                        No hay palabras suficientes para expresar lo que significas para mí. Eres la razón de mi sonrisa cada mañana,
+                        mi paz en los momentos difíciles y mi alegría en cada celebración.
+                      </motion.p>
+                      <motion.p variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}>
+                        Estos 2 años contigo han sido un sueño hecho realidad. Cada momento a tu lado es un tesoro que guardo
+                        en mi corazón. Tu amor me ha transformado en la mejor versión de mí mismo.
+                      </motion.p>
+                      <motion.p 
+                        variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
+                        className="font-bold text-pink-600 text-lg md:text-xl"
+                      >
+                        Te prometo amarte cada día más, cuidarte siempre y construir junto a ti el futuro más hermoso.
+                      </motion.p>
+                      <motion.p 
+                        variants={{ hidden: { opacity: 0, scale: 0.8 }, visible: { opacity: 1, scale: 1 } }}
+                        className="text-2xl font-dancing pt-2"
+                      >
+                        Con todo mi amor, Facu 💕
+                      </motion.p>
+                    </motion.div>
+
+                    <motion.div
+                      variants={{
+                        hidden: { opacity: 0, y: 20 },
+                        visible: { opacity: 1, y: 0 }
+                      }}
+                    >
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => setShowModal(false)}
+                        className="mt-8 w-full py-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full font-poppins font-semibold text-base shadow-lg"
+                      >
+                        Cerrar (pero mi amor por ti nunca se cierra)
+                      </motion.button>
+                    </motion.div>
+                  </motion.div>
+                </div>
               </motion.div>
 
-              <h3 className="font-dancing text-4xl md:text-5xl text-pink-600 mb-6 text-center">
-                {nombre}, eres mi todo 💕
-              </h3>
-
-              <div className="space-y-4 font-poppins text-gray-700 text-lg leading-relaxed">
-                <p>
-                  No hay palabras suficientes para expresar lo que significas para mí. Eres la razón de mi sonrisa cada mañana,
-                  mi paz en los momentos difíciles y mi alegría en cada celebración.
-                </p>
-                <p>
-                  Estos 2 años contigo han sido un sueño hecho realidad. Cada momento a tu lado es un tesoro que guardo
-                  en mi corazón. Tu amor me ha transformado en la mejor versión de mí mismo.
-                </p>
-                <p className="font-bold text-pink-600 text-xl">
-                  Te prometo amarte cada día más, cuidarte siempre y construir junto a ti el futuro más hermoso.
-                  Eres y serás por siempre el amor de mi vida.
-                </p>
-                <p className="text-center text-2xl">
-                  💕 Con todo mi amor, para toda la eternidad 💕
-                </p>
+              {/* Cuerpo del Sobre (Frente y Flaps) */}
+              <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 30 }}>
+                {/* Lateral Izquierdo */}
+                <div className="absolute inset-0 bg-pink-200" 
+                  style={{ clipPath: 'polygon(0% 0%, 50% 50%, 0% 100%)' }} 
+                />
+                {/* Lateral Derecho */}
+                <div className="absolute inset-0 bg-pink-200" 
+                  style={{ clipPath: 'polygon(100% 0%, 50% 50%, 100% 100%)' }} 
+                />
+                {/* Parte Inferior */}
+                <div className="absolute inset-0 bg-pink-300" 
+                  style={{ clipPath: 'polygon(0% 100%, 50% 50%, 100% 100%)' }} 
+                />
               </div>
 
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setShowModal(false)}
-                className="mt-8 w-full py-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full font-poppins font-semibold text-lg shadow-lg"
-              >
-                Cerrar (pero mi amor por ti nunca se cierra)
-              </motion.button>
-            </motion.div>
+              {/* Tapa del Sobre (Flap Superior) */}
+              <motion.div
+                initial={{ rotateX: 0 }}
+                animate={{ rotateX: 180 }}
+                transition={{ duration: 0.6 }}
+                className="absolute top-0 inset-x-0 h-1/2 bg-pink-400 rounded-t-lg shadow-md origin-top"
+                style={{ 
+                  zIndex: 40,
+                  clipPath: 'polygon(0% 0%, 50% 100%, 100% 0%)',
+                  backfaceVisibility: 'hidden'
+                }}
+              />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
