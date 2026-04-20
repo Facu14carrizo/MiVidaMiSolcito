@@ -1,0 +1,230 @@
+.game-container {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: #1a0a2e;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+.game-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.game-ui {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.game-hud {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(6px);
+    border-radius: 30px;
+    padding: 8px 24px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 768px) {
+    .game-hud {
+        top: 25px;
+        font-size: 13px;
+        padding: 6px 18px;
+        white-space: nowrap;
+        width: auto;
+        min-width: 200px;
+        justify-content: center;
+    }
+}
+
+.game-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    pointer-events: all;
+}
+
+.screen-box {
+    background: rgba(20, 5, 40, 0.88);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 180, 220, 0.35);
+    border-radius: 24px;
+    padding: 36px 48px;
+    max-width: 480px;
+    color: #fff;
+}
+
+.screen-box h1 {
+    font-size: 2.2rem;
+    margin-bottom: 8px;
+    color: #ffb3d9;
+}
+
+.screen-box h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #ffb3d9;
+}
+
+.screen-box p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #f0d0ff;
+    margin-bottom: 18px;
+}
+
+.game-btn {
+    background: linear-gradient(135deg, #ff6eb4, #c44dff);
+    border: none;
+    border-radius: 50px;
+    padding: 12px 36px;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    pointer-events: all;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 18px rgba(255, 80, 180, 0.45);
+    margin-top: 8px;
+}
+
+.game-btn:hover {
+    transform: scale(1.06);
+    box-shadow: 0 6px 24px rgba(255, 80, 180, 0.65);
+}
+
+.level-name {
+    font-size: 0.85rem;
+    color: #d0a0ff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.msg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.msg-box {
+    background: rgba(20, 5, 40, 0.92);
+    border: 2px solid rgba(255, 180, 220, 0.45);
+    border-radius: 20px;
+    padding: 28px 40px;
+    max-width: 400px;
+    color: #fff;
+    text-align: center;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    animation: popIn 0.3s ease;
+}
+
+@keyframes popIn {
+    from {
+        transform: scale(0.7);
+        opacity: 0
+    }
+    to {
+        transform: scale(1);
+        opacity: 1
+    }
+}
+
+.controls-hint {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 12px;
+    pointer-events: none;
+}
+
+/* Mobile Controls */
+.mobile-controls {
+    position: absolute;
+    bottom: 30px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    pointer-events: none;
+}
+
+.move-btns {
+    display: flex;
+    gap: 20px;
+}
+
+.control-btn {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(255, 180, 220, 0.3);
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    user-select: none;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.1s;
+}
+
+.control-btn:active {
+    background: rgba(255, 110, 180, 0.4);
+    transform: scale(0.95);
+}
+
+.jump-btn {
+    width: 110px;
+    height: 110px;
+    font-size: 16px;
+    background: linear-gradient(135deg, rgba(255, 110, 180, 0.3), rgba(196, 77, 255, 0.3));
+}
+
+@media (max-width: 768px) {
+    .screen-box {
+        padding: 24px 30px;
+        max-width: 90%;
+    }
+    .screen-box h1 { font-size: 1.6rem; }
+    .screen-box p { font-size: 0.9rem; }
+}

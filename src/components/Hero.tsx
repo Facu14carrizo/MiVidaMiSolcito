@@ -18,7 +18,7 @@ export default function Hero() {
   const title = "¡Felices 2 años mi amor!";
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-28 md:pt-0">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-40 md:pt-32">
       {/* Cotton Candy Mesh Gradient Background */}
       <div className="absolute inset-0 bg-[#fff5f9]" />
       <motion.div
@@ -97,34 +97,45 @@ export default function Hero() {
             Para mi persona favorita en el mundo
           </motion.h2>
 
-          <div className="relative inline-block">
-            {title.split('').map((char, i) => (
-              <motion.span
-                key={i}
-                custom={i}
-                initial="hidden"
-                animate="visible"
-                variants={{
-                  hidden: { opacity: 0, scale: 0, y: 50 },
-                  visible: (i: number) => ({
-                    opacity: 1,
-                    scale: 1,
-                    y: 0,
-                    transition: { 
-                      delay: 0.8 + (i * 0.05),
-                      type: "spring",
-                      stiffness: 150,
-                      damping: 15
-                    }
-                  })
-                }}
-                className="inline-block font-playfair font-black text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-gray-800 tracking-tight"
-                style={{ 
-                   textShadow: '4px 4px 0px rgba(255, 192, 203, 0.4)'
-                }}
-              >
-                {char === ' ' ? '\u00A0' : char}
-              </motion.span>
+          <div className="flex flex-wrap justify-center gap-y-2">
+            {title.split(' ').map((word, wordIndex) => (
+              <span key={wordIndex} className="inline-block whitespace-nowrap">
+                {word.split('').map((char, charIndex) => {
+                  const globalIndex = title.split(' ').slice(0, wordIndex).join(' ').length + (wordIndex > 0 ? 1 : 0) + charIndex;
+                  return (
+                    <motion.span
+                      key={charIndex}
+                      custom={globalIndex}
+                      initial="hidden"
+                      animate="visible"
+                      variants={{
+                        hidden: { opacity: 0, scale: 0, y: 50 },
+                        visible: (i: number) => ({
+                          opacity: 1,
+                          scale: 1,
+                          y: 0,
+                          transition: { 
+                            delay: 0.8 + (i * 0.05),
+                            type: "spring",
+                            stiffness: 150,
+                            damping: 15
+                          }
+                        })
+                      }}
+                      className="inline-block font-playfair font-black text-4xl sm:text-6xl md:text-8xl lg:text-9xl text-gray-800 tracking-tight"
+                      style={{ 
+                        textShadow: '4px 4px 0px rgba(255, 192, 203, 0.4)'
+                      }}
+                    >
+                      {char}
+                    </motion.span>
+                  );
+                })}
+                {/* Add a space after each word except the last one */}
+                {wordIndex < title.split(' ').length - 1 && (
+                  <span className="inline-block">&nbsp;</span>
+                )}
+              </span>
             ))}
           </div>
         </div>

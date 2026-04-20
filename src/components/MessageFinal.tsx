@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, Sparkles } from 'lucide-react';
+import { Heart, Sparkles, Gamepad2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import confetti from 'canvas-confetti';
 
 export default function MessageFinal() {
@@ -134,6 +135,26 @@ export default function MessageFinal() {
               Te amo eternamente <Heart className="fill-current w-5 h-5 sm:w-6 sm:h-6" />
             </span>
           </motion.button>
+
+          {/* New Game Button at the bottom */}
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5, duration: 0.8 }}
+            className="mt-24 pt-12 border-t border-pink-200/50"
+          >
+             <p className="font-dancing text-2xl text-purple-600 mb-6 font-bold italic">
+               Tengo una última sorpresa para vos... ✨
+             </p>
+             <Link 
+              to="/game"
+              className="inline-flex items-center gap-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-10 py-4 rounded-full font-black text-lg transition-all transform hover:scale-105 shadow-[0_10px_25px_rgba(79,70,229,0.4)] group"
+            >
+              <Gamepad2 size={24} className="group-hover:rotate-12 transition-transform" />
+              ADVENTURE GAME 💕
+            </Link>
+          </motion.div>
         </motion.div>
       </div>
 

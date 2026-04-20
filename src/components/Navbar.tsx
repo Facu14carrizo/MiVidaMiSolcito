@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Timer } from 'lucide-react';
+import { Heart, Timer, Gamepad2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 function LoveCounter() {
   const [timeLeft, setTimeLeft] = useState({
@@ -54,15 +55,15 @@ function LoveCounter() {
 
   return (
     <div className="flex flex-col items-center gap-1 md:gap-2">
-      <div className="flex items-center gap-2 md:gap-4 bg-white/40 backdrop-blur-md px-4 md:px-8 py-2 md:py-3 rounded-2xl md:rounded-full border border-pink-200/50 shadow-lg">
-        <Timer size={20} className="text-pink-500 hidden sm:block animate-pulse" />
-        <div className="flex gap-2.5 md:gap-6 flex-wrap justify-center items-end">
+      <div className="flex items-center gap-1 sm:gap-4 bg-white/40 backdrop-blur-md px-2 md:px-8 py-1.5 md:py-3 rounded-2xl md:rounded-full border border-pink-200/50 shadow-lg">
+        <Timer size={18} className="text-pink-500 hidden sm:block animate-pulse" />
+        <div className="flex gap-1.5 md:gap-6 flex-wrap justify-center items-end">
           {items.map((item, i) => (
-            <div key={i} className="flex flex-col items-center min-w-[34px] md:min-w-[45px]">
-              <span className="text-xl md:text-3xl font-black text-pink-500 drop-shadow-[0_2px_2px_rgba(255,182,193,0.3)] leading-none tabular-nums">
+            <div key={i} className="flex flex-col items-center min-w-[30px] md:min-w-[45px]">
+              <span className="text-lg md:text-3xl font-black text-pink-500 drop-shadow-[0_2px_2px_rgba(255,182,193,0.3)] leading-none tabular-nums">
                 {item.value}
               </span>
-              <span className="text-[10px] md:text-[11px] text-pink-400 uppercase font-black tracking-tighter mt-1 md:mt-2 opacity-80">
+              <span className="text-[9px] md:text-[11px] text-pink-400 uppercase font-black tracking-tighter mt-1 md:mt-2 opacity-80">
                 {item.label}
               </span>
             </div>
@@ -102,11 +103,11 @@ export default function Navbar() {
         </div>
 
         {/* Text replaced Navigation Links */}
-        <div className="hidden lg:flex items-center shrink-0">
+        <div className="hidden md:flex items-center shrink-0">
           <motion.p 
             initial={{ opacity: 0, y: -5 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-outfit text-pink-400 text-sm md:text-lg font-black uppercase tracking-[0.2em]"
+            className="font-outfit text-pink-400 text-sm xl:text-lg font-black uppercase tracking-[0.2em]"
           >
             Desde que estamos juntos
           </motion.p>

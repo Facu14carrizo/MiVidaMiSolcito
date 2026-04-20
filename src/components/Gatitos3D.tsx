@@ -1,7 +1,22 @@
+import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Spline from '@splinetool/react-spline';
 
 export default function Gatitos3D() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    const el = containerRef?.current;
+    if (!el) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+    };
+
+    el.addEventListener('wheel', handleWheel, { passive: false });
+    return () => el.removeEventListener('wheel', handleWheel);
+  }, []);
+
   return (
     <section id="gatitos" className="relative py-20 px-4 bg-gradient-to-b from-purple-50 to-pink-50 overflow-hidden">
       <div className="max-w-6xl mx-auto">
@@ -21,6 +36,7 @@ export default function Gatitos3D() {
         </motion.div>
 
         <motion.div
+          ref={containerRef}
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
@@ -29,9 +45,6 @@ export default function Gatitos3D() {
           style={{
             boxShadow: '0 0 60px rgba(255, 105, 180, 0.4), 0 0 100px rgba(210, 153, 245, 0.3)',
             touchAction: 'none'
-          }}
-          onWheel={(e) => {
-            if (e.ctrlKey) e.preventDefault();
           }}
         >
           <div className="aspect-[4/5] sm:aspect-video bg-gradient-to-br from-pink-100 to-purple-100 relative pointer-events-auto">
