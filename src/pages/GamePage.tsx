@@ -40,6 +40,46 @@ const MINI_MSGS = [
 ];
 const HEARTS_PER_LEVEL = 5;
 
+const PLATFORM_LAYOUTS = [
+  // Nivel 1: saltos suaves y plataformas amplias
+  [
+    { x: 220, yOffset: 90, w: 240, h: 18 },
+    { x: 520, yOffset: 130, w: 220, h: 18 },
+    { x: 820, yOffset: 95, w: 240, h: 18 },
+    { x: 1120, yOffset: 150, w: 200, h: 18 },
+    { x: 1400, yOffset: 110, w: 220, h: 18 },
+    { x: 1700, yOffset: 170, w: 190, h: 18 },
+    { x: 1980, yOffset: 130, w: 220, h: 18 },
+    { x: 2250, yOffset: 90, w: 190, h: 18 },
+  ],
+  // Nivel 2: plataformas escalonadas y más separación
+  [
+    { x: 240, yOffset: 120, w: 180, h: 18 },
+    { x: 520, yOffset: 210, w: 150, h: 18 },
+    { x: 760, yOffset: 150, w: 150, h: 18 },
+    { x: 1000, yOffset: 280, w: 140, h: 18 },
+    { x: 1240, yOffset: 190, w: 160, h: 18 },
+    { x: 1500, yOffset: 320, w: 130, h: 18 },
+    { x: 1740, yOffset: 220, w: 150, h: 18 },
+    { x: 2010, yOffset: 300, w: 130, h: 18 },
+    { x: 2240, yOffset: 170, w: 180, h: 18 },
+  ],
+  // Nivel 3: saltos más precisos y rutas más exigentes
+  [
+    { x: 230, yOffset: 140, w: 150, h: 18 },
+    { x: 470, yOffset: 240, w: 120, h: 18 },
+    { x: 670, yOffset: 170, w: 130, h: 18 },
+    { x: 900, yOffset: 300, w: 110, h: 18 },
+    { x: 1090, yOffset: 210, w: 120, h: 18 },
+    { x: 1300, yOffset: 340, w: 100, h: 18 },
+    { x: 1490, yOffset: 240, w: 120, h: 18 },
+    { x: 1700, yOffset: 360, w: 100, h: 18 },
+    { x: 1880, yOffset: 260, w: 120, h: 18 },
+    { x: 2100, yOffset: 320, w: 120, h: 18 },
+    { x: 2320, yOffset: 200, w: 130, h: 18 },
+  ],
+];
+
 const GamePage: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [gameState, setGameState] = useState<'menu' | 'playing' | 'levelend' | 'end'>('menu');
@@ -140,6 +180,7 @@ const GamePage: React.FC = () => {
   const loadLevel = (lv: number) => {
     const g = gameRef.current;
     const WORLD_W = 2500;
+    const safeLevel = Math.min(lv, PLATFORM_LAYOUTS.length - 1);
     
     // Adjust ground and platform heights for mobile
     const gh = g.isMobile ? 160 : 70;
@@ -147,23 +188,17 @@ const GamePage: React.FC = () => {
     g.player = { x: 100, y: 0, w: 34, h: 46, vx: 0, vy: 0, onGround: false, facingRight: true, frame: 0, ft: 0 };
     g.player.y = g.H - gh - g.player.h;
 
-    // Richer platform structure - adjusted for new ground height
+    const mobileYOffsetScale = g.isMobile ? 0.85 : 1;
+    const levelPlatforms = PLATFORM_LAYOUTS[safeLevel].map((p) => ({
+      x: p.x,
+      y: g.H - gh - (p.yOffset * mobileYOffsetScale),
+      w: p.w,
+      h: p.h,
+    }));
+
     g.platforms = [
       { x: 0, y: g.H - gh, w: WORLD_W, h: gh, ground: true },
-      // Level start
-      { x: 220, y: g.H - gh - 100, w: 180, h: 18 },
-      { x: 460, y: g.H - gh - 190, w: 160, h: 18 },
-      { x: 700, y: g.H - gh - 100, w: 160, h: 18 },
-      // Multi-layer middle
-      { x: 920, y: g.H - gh - 180, w: 140, h: 18 },
-      { x: 920, y: g.H - gh - 330, w: 140, h: 18 },
-      { x: 1150, y: g.H - gh - 250, w: 200, h: 18 },
-      { x: 1450, y: g.H - gh - 130, w: 160, h: 18 },
-      { x: 1550, y: g.H - gh - 310, w: 120, h: 18 },
-      // Path to end
-      { x: 1750, y: g.H - gh - 180, w: 180, h: 18 },
-      { x: 2050, y: g.H - gh - 250, w: 150, h: 18 },
-      { x: 2280, y: g.H - gh - 150, w: 180, h: 18 },
+      ...levelPlatforms,
     ];
 
     // Decorations
@@ -317,7 +352,7 @@ const GamePage: React.FC = () => {
     msgTimeoutRef.current = setTimeout(() => {
       setMsg(null);
       msgTimeoutRef.current = null;
-    }, 3200);
+    }, 1200);
   };
 
   const draw = (ctx: CanvasRenderingContext2D) => {
