@@ -2,19 +2,6 @@ import { motion } from 'framer-motion';
 import { Heart } from 'lucide-react';
 
 export default function Hero() {
-  const scrollToPhotos = () => {
-    document.getElementById('photos')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const letterVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: i * 0.05, duration: 0.5 }
-    })
-  };
-
   const title = "¡Felices 2 años mi amor!";
 
   return (
@@ -97,7 +84,7 @@ export default function Hero() {
             Para mi persona favorita en el mundo
           </motion.h2>
 
-          <div className="flex flex-wrap justify-center gap-y-2">
+          <div className="flex flex-wrap justify-center gap-x-6 md:gap-x-10 gap-y-2 text-center">
             {title.split(' ').map((word, wordIndex) => (
               <span key={wordIndex} className="inline-block whitespace-nowrap">
                 {word.split('').map((char, charIndex) => {
@@ -131,10 +118,6 @@ export default function Hero() {
                     </motion.span>
                   );
                 })}
-                {/* Add a space after each word except the last one */}
-                {wordIndex < title.split(' ').length - 1 && (
-                  <span className="inline-block">&nbsp;</span>
-                )}
               </span>
             ))}
           </div>
@@ -152,25 +135,6 @@ export default function Hero() {
           </span>
         </motion.p>
 
-        <motion.button
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 3, duration: 0.8 }}
-          whileHover={{ scale: 1.1, rotate: [-1, 1, -1] }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => document.getElementById('gatitos')?.scrollIntoView({ behavior: 'smooth' })}
-          className="bg-white/60 backdrop-blur-md px-12 py-5 rounded-full font-outfit font-bold text-2xl text-pink-400 shadow-[0_10px_30px_rgba(255,182,193,0.3)] hover:shadow-[0_15px_40px_rgba(255,182,193,0.5)] border-2 border-pink-100 transition-all group"
-        >
-          <span className="flex items-center gap-3">
-            Mirar nuestra historia 🧸
-            <motion.span
-              animate={{ rotate: [0, 20, -20, 0] }}
-              transition={{ repeat: Infinity, duration: 2 }}
-            >
-              💖
-            </motion.span>
-          </span>
-        </motion.button>
       </div>
 
       <motion.div

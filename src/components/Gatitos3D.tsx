@@ -4,17 +4,29 @@ import Spline from '@splinetool/react-spline';
 
 export default function Gatitos3D() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = React.useState(false);
   
   useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    const updateMobileState = () => setIsMobile(mediaQuery.matches);
+    updateMobileState();
+
+    mediaQuery.addEventListener('change', updateMobileState);
+
     const el = containerRef?.current;
-    if (!el) return;
+    if (!el) {
+      return () => mediaQuery.removeEventListener('change', updateMobileState);
+    }
 
     const handleWheel = (e: WheelEvent) => {
       e.preventDefault();
     };
 
     el.addEventListener('wheel', handleWheel, { passive: false });
-    return () => el.removeEventListener('wheel', handleWheel);
+    return () => {
+      el.removeEventListener('wheel', handleWheel);
+      mediaQuery.removeEventListener('change', updateMobileState);
+    };
   }, []);
 
   return (
@@ -41,17 +53,18 @@ export default function Gatitos3D() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
-          className="relative rounded-3xl overflow-hidden shadow-2xl touch-none"
+          className="relative rounded-3xl overflow-hidden shadow-2xl"
           style={{
             boxShadow: '0 0 60px rgba(255, 105, 180, 0.4), 0 0 100px rgba(210, 153, 245, 0.3)',
-            touchAction: 'none'
+            touchAction: isMobile ? 'manipulation' : 'none'
           }}
         >
           <div className="aspect-[4/5] sm:aspect-video bg-gradient-to-br from-pink-100 to-purple-100 relative pointer-events-auto">
             <img 
               src="/og-image.png" 
               alt="Gatitos Preview" 
-              className="absolute inset-0 w-full h-full object-cover opacity-50 blur-[2px]"
+              loading="lazy"
+              className={`absolute inset-0 w-full h-full object-cover opacity-50 ${isMobile ? '' : 'blur-[2px]'}`}
             />
             <div className="absolute inset-0 z-10">
               <Spline 
