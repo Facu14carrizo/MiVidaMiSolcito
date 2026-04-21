@@ -38,6 +38,7 @@ const MINI_MSGS = [
   'Sos mi razón para sonreír 😊',
   'Para siempre sos vos 🌹',
 ];
+const HEARTS_PER_LEVEL = 5;
 
 const GamePage: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -185,10 +186,10 @@ const GamePage: React.FC = () => {
         }
     });
 
-    g.hearts = [];
+    const levelHearts = [];
     g.platforms.forEach((p, i) => {
       if (!p.ground) {
-        g.hearts.push({
+        levelHearts.push({
           x: p.x + p.w / 2, y: p.y - 38,
           collected: false, float: i * 0.8,
           msg: MINI_MSGS[i % MINI_MSGS.length]
@@ -196,9 +197,10 @@ const GamePage: React.FC = () => {
       }
     });
     // Extra hearts
-    g.hearts.push({ x: 500, y: g.H - gh - 50, collected: false, float: 2.1, msg: MINI_MSGS[7] });
-    g.hearts.push({ x: 1200, y: g.H - gh - 50, collected: false, float: 4.3, msg: MINI_MSGS[8] });
-    g.hearts.push({ x: 1900, y: g.H - gh - 50, collected: false, float: 1.5, msg: MINI_MSGS[9] });
+    levelHearts.push({ x: 500, y: g.H - gh - 50, collected: false, float: 2.1, msg: MINI_MSGS[7] });
+    levelHearts.push({ x: 1200, y: g.H - gh - 50, collected: false, float: 4.3, msg: MINI_MSGS[8] });
+    levelHearts.push({ x: 1900, y: g.H - gh - 50, collected: false, float: 1.5, msg: MINI_MSGS[9] });
+    g.hearts = levelHearts.slice(0, HEARTS_PER_LEVEL);
 
     g.heartsCollected = 0;
     g.totalHearts = g.hearts.length;
