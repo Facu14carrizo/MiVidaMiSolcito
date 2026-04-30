@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 const sections = [
   { id: 'hero', label: 'Inicio' },
   { id: 'photos', label: 'Fotos' },
-  { id: 'google-photos', label: 'Álbum Google' },
   { id: 'gatitos', label: 'Gatitos' },
   { id: 'message', label: 'Mensaje' }
 ];

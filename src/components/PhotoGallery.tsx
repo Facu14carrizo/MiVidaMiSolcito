@@ -1,60 +1,13 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { Heart, X, Maximize2 } from 'lucide-react';
-
-const images = [
-  "20241225_161900.jpg", "20250118_160102.jpg", "20250118_160219.jpg", "20250216_232423.jpg",
-  "20250216_232821.jpg", "20250402_181537.jpg", "20250412_185130.jpg", "20250412_192025.jpg",
-  "20250412_193246.jpg", "20250412_193527.jpg", "20250412_194417.jpg", "20250421_222328.jpg",
-  "20250621_190209.jpg", "20250621_190227.jpg", "20250721_225155.jpg", "20250721_225422.jpg",
-  "20250818_182942.jpg", "20250823_180638.jpg", "20250823_182359.jpg", "20250823_183638.jpg",
-  "20250823_183947.jpg", "20251011_222539.jpg", "20251012_152619.jpg", "20251018_205205.jpg",
-  "20251018_222418.jpg", "20251019_043514.jpg", "20251019_043932.jpg", "20251101_025311.jpg",
-  "20251101_025416.jpg", "20251109_002713.jpg", "20251121_211628.jpg", "20251122_204432.jpg",
-  "20251205_210509.jpg", "20260206_193100.jpg", "20260207_195424.jpg", "20260207_230944.jpg",
-  "20260208_011053.jpg", "20260208_011220.jpg", "20260208_103927.jpg", "20260208_114438.jpg",
-  "20260208_174526.jpg", "20260214_200702.jpg", "20260214_221130.jpg", "20260214_223316.jpg",
-  "20260215_005018.jpg", "20260301_191731.jpg", "20260301_193909.jpg", "20260313_181605.jpg",
-  "20260313_204154.jpg", "20260315_223101.jpg", "20260316_000913.jpg", "20260316_001412.jpg",
-  "20260316_001809.jpg", "20260402_144521.jpg", "20260402_152159.jpg", "20260402_181805.jpg",
-  "20260402_184532.jpg", "20260402_190309.jpg", "20260402_224533.jpg", "20260403_161723.jpg",
-  "20260403_190247.jpg", "20260403_190416.jpg", "20260403_191350.jpg", "20260404_130006.jpg",
-  "20260404_163845.jpg", "IMG-20240820-WA0050.jpg", "IMG-20241014-WA0127.jpg",
-  "IMG-20241102-WA0011.jpg", "IMG_20240616_175812.jpg", "IMG_20240616_175945.jpg",
-  "IMG_20240913_220233.jpg", "IMG_20240915_172010.jpg", "IMG_20240927_233601.jpg",
-  "IMG_20241011_165552.jpg", "IMG_20241011_181653.jpg", "IMG_20241011_192407.jpg",
-  "IMG_20241014_225203.jpg", "IMG_20241123_013509.jpg"
-];
-
-const captions = [
-  "Momentos mágicos ✨", "Nuestro amor infinito ❤️", "Siempre juntos", "Pura felicidad",
-  "Mi lugar favorito eres tú", "Aventuras inolvidables", "Sos mi todo 🧸", "Cada segundo cuenta",
-  "Nuestro mundo rosa 🌸", "Contigo todo es mejor", "Amor de mi vida", "Para siempre"
-];
-
-const vacationCaptions = [
-  "Nuestras vacaciones mágicas 🏖️", "Amor bajo el sol ☀️", "Nuestro paraíso juntos 🌊",
-  "Días inolvidables en la playa 🏝️", "Sos mi sol en cada viaje 💖", "Momentos de paz y amor 🐚",
-  "Disfrutando del mar con vos 🌊", "Vibras de vacaciones ✨", "Atardeceres perfectos 🌅"
-];
-
-const getCaption = (imgName: string, index: number) => {
-  if (imgName.includes('202604') || imgName.includes('202603')) {
-    return vacationCaptions[index % vacationCaptions.length];
-  }
-  return captions[index % captions.length];
-};
-
-const sortedImages = [...images].sort((a, b) => {
-  const getTimestamp = (name: string) => {
-    const match = name.match(/(\d{8}(?:_\d{6})?)/);
-    return match ? match[1] : name;
-  };
-  return getTimestamp(a).localeCompare(getTimestamp(b));
-});
+import { galleryImages } from '../data/imageGalleryData';
 
 export default function PhotoGallery() {
-  const [selectedImg, setSelectedImg] = useState<string | null>(null);
+  const [selectedImg, setSelectedImg] = useState<{ src: string, caption: string } | null>(null);
+
+  // We use galleryImages directly because they are already sorted chronologically in the data file.
+  const imagesToShow = galleryImages;
 
   return (
     <section id="photos" className="min-h-screen py-24 bg-[#fff5f9]">
@@ -80,25 +33,25 @@ export default function PhotoGallery() {
           </p>
         </motion.div>
 
-        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-8 space-y-8">
-          {sortedImages.map((img, index) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          {imagesToShow.map((item, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: (index % 5) * 0.1 }}
-              className="break-inside-avoid"
+              transition={{ delay: (index % 4) * 0.1 }}
+              className="flex justify-center"
             >
               <motion.div
                 whileHover={{ scale: 1.05, rotate: 0 }}
                 style={{ rotate: `${(Math.random() - 0.5) * 8}deg` }}
                 className="bg-white p-4 pb-8 shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-pink-50 rounded-sm cursor-pointer group"
-                onClick={() => setSelectedImg(img)}
+                onClick={() => setSelectedImg(item)}
               >
                 <div className="relative overflow-hidden aspect-[4/5] bg-pink-50 rounded-xs mb-4">
                   <img
-                    src={`/facuysol/${img}`}
+                    src={`/facuysol/${item.src}`}
                     alt="Nuestro momento"
                     className="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 transition-all duration-500"
                     loading="lazy"
@@ -110,7 +63,7 @@ export default function PhotoGallery() {
                   </div>
                 </div>
                 <p className="font-great-vibes text-2xl text-pink-400 text-center">
-                  {getCaption(img, index)}
+                  {item.caption}
                 </p>
                 <div className="mt-2 text-[10px] text-gray-300 font-mono text-center">
                   #{index + 1}
@@ -145,13 +98,13 @@ export default function PhotoGallery() {
               onClick={(e) => e.stopPropagation()}
             >
               <img
-                src={`/facuysol/${selectedImg}`}
+                src={`/facuysol/${selectedImg.src}`}
                 alt="Selected"
                 className="w-full h-full object-contain rounded-lg shadow-2xl"
               />
               <div className="absolute -bottom-12 left-0 right-0 text-center">
                 <p className="font-great-vibes text-4xl text-pink-300">
-                  {getCaption(selectedImg, sortedImages.indexOf(selectedImg))}
+                  {selectedImg.caption}
                 </p>
               </div>
             </motion.div>
